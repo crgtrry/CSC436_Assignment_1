@@ -67,8 +67,14 @@
         'ParkWhiz'
     ];
 
+    var rootDiv;
+    var companyNamesContainer;
+    var reverseButtonContainer;
+    var reverseContainer;
+    var toggleButtonContainer;
+    var toggleContainer;
     function clearDocument() {
-        var rootDiv = document.getElementById('rootContainer');
+        rootDiv = document.getElementById('rootContainer');
         if (rootDiv) {
             while (rootDiv.hasChildNodes()) {
                 rootDiv.removeChild(rootDiv.lastChild);
@@ -78,9 +84,9 @@
 
     function initDocument() {
         clearDocument();
-        var rootDiv = document.createElement('div');
+        rootDiv = document.createElement('div');
         rootDiv.id = 'rootContainer';
-        var companyNamesContainer = document.createElement('div');
+        companyNamesContainer = document.createElement('div');
         companyNamesContainer.id = "companyContainer";
         chicagoStartups.forEach( function(chicagoStartup, index) {
             var childDiv = document.createElement('div');
@@ -94,7 +100,7 @@
     }
 
     function renderReversedElements() {
-        var reverseContainer = document.getElementById('reverseContainer');
+        reverseContainer = document.getElementById('reverseContainer');
         var reversedChicagoStartups = [];
         if (reverseContainer) {
             if (reverseContainer.hasChildNodes()) {
@@ -120,6 +126,26 @@
                 reverseContainer = chicagoStartupsReverse();
             }
         }
+    }
+
+    function renderHorizontalElements() {
+        debugger;
+        if (toggleContainer.hasChildNodes()) {
+            toggleDiv = document.getElementById('toggleContainer');
+            if (toggleDiv) {
+                while (toggleDiv.hasChildNodes()) {
+                    toggleDiv.removeChild(toggleDiv.lastChild);
+                }
+            }
+        }
+        var childDiv = document.createElement('div');
+        chicagoStartups.forEach(function(chicagoStartup, index) {
+            console.log(chicagoStartup);
+            var text = document.createTextNode(chicagoStartup);
+            childDiv.appendChild(text);
+        })
+        toggleContainer.appendChild(childDiv);
+        //}
     }
 
     function chicagoStartupsReverse() {
@@ -157,7 +183,7 @@
     }
     
     function initReverse() {
-        var reverseContainer = document.createElement('div');
+        reverseContainer = document.createElement('div');
         reverseContainer.id = 'reverseContainer';
         var reverseBtn = document.createElement('button');
         var btnText = document.createTextNode('Reverse');
@@ -169,7 +195,30 @@
         document.getElementById('rootContainer').appendChild(reverseContainer);
     }
 
+    function initToggle() {
+        toggleContainer = document.createElement('div');
+        toggleContainer.id = 'toggleContainer';
+        var toggleBtn = document.createElement('button');
+        var btnText = document.createTextNode('vertical/horizontal');
+        toggleBtn.onclick = toggleDisplay;
+        toggleBtn.appendChild(btnText);
+        toggleButtonContainer = document.createElement('div');
+        toggleButtonContainer.appendChild(toggleBtn);
+        rootDiv.appendChild(toggleButtonContainer);
+        rootDiv.appendChild(toggleContainer);
+        document.getElementById('toggleContainer').style.display='block';
+    }
+
     function toggleDisplay() {
+        if (document.getElementById('toggleContainer').style.display === 'block') {
+            document.getElementById('toggleContainer').style.display = 'none';
+            document.getElementById('reverseContainer').style.display = 'block';
+            renderHorizontalElements();
+        } else {
+            document.getElementById('toggleContainer').style.display = 'block';
+            document.getElementById('reverseContainer').style.display = 'none';
+            renderReversedElements();
+        }
         /*
         TODO: REVIEW THE CODE IN THE PROVIDED REVERSE EXAMPLE, USE JAVASCRIPT TO ADD A CLICKABLE BUTTON 
         CALLED "Toggle Display" ... WHEN THE USER CLICKS THE BUTTON, IT RENDERS THE DISPLAY OF THE COMPANY NAMES 
@@ -189,6 +238,7 @@
     function run() {
         initDocument();
         initReverse();
+        initToggle();
     }
     run();
     
