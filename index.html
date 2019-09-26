@@ -147,6 +147,12 @@
         //}
     }
 
+       /*
+            DONE: REMOVES ANY SPECIAL CHARACTERS FROM EACH COMPANY NAME AND
+              DISPLAYS THE NUMBER OF REMAINING CHARACTERS NEXT TO THE FULL WORD.
+              DONT FORGET TO REMOVE LEADING AND TRAILING WHITESPACES AS WELL
+        */
+
     function chicagoStartupsReverse() {
         var reversedStartups = [];
         for (var i = chicagoStartups.length -1; i>=0; i--) {
@@ -156,6 +162,11 @@
         return reversedStartups;
     }
 
+      /*
+            DONE: REMOVES ANY SPECIAL CHARACTERS FROM EACH COMPANY NAME AND
+              DISPLAYS THE NUMBER OF REMAINING CHARACTERS NEXT TO THE FULL WORD.
+              DONT FORGET TO REMOVE LEADING AND TRAILING WHITESPACES AS WELL
+        */
     function cleanAndCountCharacters() {
         console.log('CLEAN AND COUNT CHARACTERS');
         //var newChicagoStartups = [];
@@ -163,21 +174,21 @@
             chicagoStartups[i] = chicagoStartups[i].trim().replace(/[^a-zA-Z ]/g,"");
         }
         while(companyNamesContainer.hasChildNodes()) {
-            //chicagoStartups.push(companyNamesContainer.lastChild.innerHTML);
             companyNamesContainer.removeChild(companyNamesContainer.lastChild);
         }
         chicagoStartups.forEach(function(chicagoStartup,index) {
             var childDiv = document.createElement('div');
             var text = document.createTextNode(chicagoStartup);
+            var words = text.nodeValue.replace(/\s+/g,' ').split(" ");
+            var str="";
+            for (var i=0; i<words.length; i++) {
+                str = str+words[i].length + words[i] + " ";
+            }
+            text.nodeValue=str.trim();
             childDiv.appendChild(text);
             companyNamesContainer.appendChild(childDiv);
         })
-       
-        /*
-            TODO: REMOVES ANY SPECIAL CHARACTERS FROM EACH COMPANY NAME AND
-              DISPLAYS THE NUMBER OF REMAINING CHARACTERS NEXT TO THE FULL WORD.
-              DONT FORGET TO REMOVE LEADING AND TRAILING WHITESPACES AS WELL
-        */
+
 
     }
     
@@ -208,18 +219,8 @@
         document.getElementById('toggleContainer').style.display='block';
     }
 
-    function toggleDisplay() {
-        if (document.getElementById('toggleContainer').style.display === 'block') {
-            document.getElementById('toggleContainer').style.display = 'none';
-            document.getElementById('reverseContainer').style.display = 'block';
-            renderHorizontalElements();
-        } else {
-            document.getElementById('toggleContainer').style.display = 'block';
-            document.getElementById('reverseContainer').style.display = 'none';
-            renderReversedElements();
-        }
-        /*
-        TODO: REVIEW THE CODE IN THE PROVIDED REVERSE EXAMPLE, USE JAVASCRIPT TO ADD A CLICKABLE BUTTON 
+    /*
+    DONE: REVIEW THE CODE IN THE PROVIDED REVERSE EXAMPLE, USE JAVASCRIPT TO ADD A CLICKABLE BUTTON 
         CALLED "Toggle Display" ... WHEN THE USER CLICKS THE BUTTON, IT RENDERS THE DISPLAY OF THE COMPANY NAMES 
         FROM VERTICAL, TO HORIZONTAL.
         IF THE USER CLICKS THE TOGGLE BUTTON AGAIN THE NAMES SHOULD ONCE AGAIN BE DISPLAYED VERTICALLY.
@@ -232,6 +233,16 @@
 
             3.  
         */
+    function toggleDisplay() {
+        if (document.getElementById('toggleContainer').style.display === 'block') {
+            document.getElementById('toggleContainer').style.display = 'none';
+            document.getElementById('reverseContainer').style.display = 'block';
+            renderHorizontalElements();
+        } else {
+            document.getElementById('toggleContainer').style.display = 'block';
+            document.getElementById('reverseContainer').style.display = 'none';
+            renderReversedElements();
+        }    
     }
     
     function run() {
@@ -245,7 +256,7 @@
         displayInstructions: true
     };
 
-    //INVOKED THIS ANONYMOUS FUNCTION TO DISPLAY HOMEWORK INSTRUCTIONS IN THE CONSOLE
+    //DONE: INVOKED THIS ANONYMOUS FUNCTION TO DISPLAY HOMEWORK INSTRUCTIONS IN THE CONSOLE
     setTimeout(function() {
         if (flags.displayInstructions) {
             console.log(`
