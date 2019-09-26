@@ -129,7 +129,6 @@
     }
 
     function renderHorizontalElements() {
-        debugger;
         if (toggleContainer.hasChildNodes()) {
             toggleDiv = document.getElementById('toggleContainer');
             if (toggleDiv) {
@@ -163,17 +162,17 @@
         for (var i = 0; i<=chicagoStartups.length-1; i++) {
             chicagoStartups[i] = chicagoStartups[i].trim().replace(/[^a-zA-Z ]/g,"");
         }
-        //var oldChicagoStartups = companyNamesContainer.g
-        var rC = document.getElementById('rootContainer');
-        //var c = rC.getElementById('companyContainer');
-        // newChicagoStartups.forEach( function(ChicagoStartups, index) {
-        //     var childDiv = document.createElement('div');
-        //     var text = document.createTextNode(index.toString().concat(' .) ').concat(newChicagoStartups));
-        //     childDiv.replaceChild(text,c.getElementById("v_"+index.toString()));
-        // });
-        var rc = document.getElementById('rootContainer');
-        document.removeChild(rc);
-        initDocument();
+        while(companyNamesContainer.hasChildNodes()) {
+            //chicagoStartups.push(companyNamesContainer.lastChild.innerHTML);
+            companyNamesContainer.removeChild(companyNamesContainer.lastChild);
+        }
+        chicagoStartups.forEach(function(chicagoStartup,index) {
+            var childDiv = document.createElement('div');
+            var text = document.createTextNode(chicagoStartup);
+            childDiv.appendChild(text);
+            companyNamesContainer.appendChild(childDiv);
+        })
+       
         /*
             TODO: REMOVES ANY SPECIAL CHARACTERS FROM EACH COMPANY NAME AND
               DISPLAYS THE NUMBER OF REMAINING CHARACTERS NEXT TO THE FULL WORD.
